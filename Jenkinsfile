@@ -8,14 +8,33 @@ pipeline {
 
     stages{
         
-        stage("Build"){
+        stage("Compile"){
             
-            steps{
-                
-                sh "mvn clean package -DskipTests -B -ntp"
+            steps {
+                sh 'mvn clean compile -B -ntp'
             }
         }
 
+        stage("Test"){
+            steps {
+                sh "mvn test -B -ntp"
+                junit "target/surefire-reports/*.xml"
+                jacoco()
+            }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'mvn package -DskipTests -B -ntp'
+            }
+        }
 
     }
+
+    // post{
+    //     always{
+    //         cleanWs()
+    //     }
+    // }
 }
+11
