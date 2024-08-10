@@ -12,7 +12,7 @@ pipeline {
             
             steps{
                 
-                sh "mvn -f clean package -DskipTests -B -ntp"
+                sh "mvn clean package -DskipTests -B -ntp"
             }
         }
 
